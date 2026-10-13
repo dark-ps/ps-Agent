@@ -1,0 +1,101 @@
+from pathlib import Path
+import sys
+import random
+import time
+
+
+def печать_постепенно(текст):
+    i = 0
+
+    while i < len(текст):
+        n = random.randint(1, 3)
+
+        print(
+            текст[i:i+n],
+            end="",
+            flush=True
+        )
+
+        time.sleep(
+            random.uniform(0.05, 0.15)
+        )
+
+        i += n
+
+    print()
+
+
+def проверка():
+    база = Path(__file__).resolve().parent.parent
+
+    файлы = [
+        база / "ps" / "dark.py",
+        база / "scripts" / "wtf.py",
+        база / "scripts" / "услуга.py"
+    ]
+
+    нужные = {
+        "dark": "dark='t.me/sii_3'",
+        "версия": "версия='4.0'",
+        "site": "site='вебсаит: dark.ps'"
+    }
+
+    нарушения = []
+
+    for файл in файлы:
+        if not файл.exists():
+            нарушения.append(файл.name)
+            continue
+
+        текст = файл.read_text(
+            encoding="utf-8"
+        )
+
+        изменённые = []
+
+        for имя, оригинал in нужные.items():
+            if оригинал not in текст:
+                изменённые.append(имя)
+
+        if изменённые:
+            нарушения.append(файл.name)
+
+    if not нарушения:
+        return True
+
+    файлы_строкой = ", ".join(нарушения)
+
+    сообщение = (
+        "\033[38;2;255;175;115mTAMPER "
+        "\033[38;2;255;105;115mDETECTED\033[0m\n"
+        "\033[38;2;215;119;87mReturn Original:\033[0m "
+        "[ \033[38;2;255;195;105m"
+        f"{файлы_строкой}"
+        "\033[0m ]"
+    )
+
+    печать_постепенно(сообщение)
+
+    telegram = "Telegram: t.me/sii_3"
+    ширина = len(telegram) + 4
+
+    print(
+        "\033[38;2;180;150;255m"
+        f"╭{'─' * ширина}╮"
+    )
+
+    print(
+        "\033[38;2;180;150;255m"
+        "│  "
+        "\033[38;2;120;175;255m"
+        f"{telegram}"
+        "\033[38;2;180;150;255m"
+        "  │"
+    )
+
+    print(
+        f"╰{'─' * ширина}╯"
+        "\033[0m"
+    )
+
+    sys.exit(1)

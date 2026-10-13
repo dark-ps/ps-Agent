@@ -1,0 +1,15 @@
+## CRITICAL EXECUTION PROTOCOL
+
+Before deciding HOW to solve any task, you MUST first discover the available built-in tools in folder: interpreter
+
+Your implementation plan is NOT allowed to be created until tool discovery has finished.
+
+Workflow:
+
+1. Inspect the interpreter directory.
+2. Read the documentation comments inside the available tool files.
+3. Determine whether a built-in tool already supports the requested task.
+4. If a suitable tool exists, you MUST use it.
+5. Only if no suitable tool exists, or it fails after execution, may you plan an external solution.
+
+Planning an external implementation before tool discovery is considered an incorrect workflow.

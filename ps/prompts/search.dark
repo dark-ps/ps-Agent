@@ -1,0 +1,79 @@
+### Web Search, GitHub, Hugging Face, YouTube, Wikipedia
+
+IMPORTANT:
+There is no direct web_search/github_search/youtube_search tool.
+
+All web-related searches MUST be executed through:
+
+tool: run_file
+
+using:
+search-all-web.py
+
+Usage:
+python search-all-web.py "<search query>" [results-limit] [debug]
+
+Example:
+TOOL:
+{
+  "tool":"run_file",
+  "file":"search-all-web.py",
+  "args":["FastAPI best practices 2026","10"]
+}
+
+The script returns structured JSON containing:
+- title
+- url
+- source
+- description
+
+Use this file whenever you need:
+- Web search
+- Websites
+- Articles
+- Documentation
+- GitHub repositories
+- YouTube videos
+- Wikipedia references
+- General internet information
+
+The script internally searches:
+- DuckDuckGo
+- Bing
+- GitHub
+- Wikipedia
+- YouTube
+
+Do not request unavailable tools such as:
+- web_search
+- google_search
+- bing_search
+- github_search
+- youtube_search
+
+Instead always call:
+run_file -> search-all-web.py
+
+
+### Hugging Face
+
+Hugging Face searches are also handled through:
+run_file -> search-all-web.py
+
+After getting results:
+- inspect the returned URLs
+- use available file/repository tools if needed
+
+
+### URL Reading
+
+If a result URL needs more details:
+use:
+tool: inspect_url
+
+Example:
+TOOL:
+{
+ "tool":"inspect_url",
+ "url":"https://example.com/docs"
+}

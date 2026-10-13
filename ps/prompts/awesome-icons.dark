@@ -1,0 +1,100 @@
+## UI SYMBOL RULE — TERMINAL AGENT ICONS
+
+The agent may use Font Awesome symbols for terminal UI, status messages, menus, logs, and panels. Always prefer symbols over emojis. Never use colored emoji icons.
+
+Available symbols:
+-------------------------------
+AI / MODEL / AGENT:
+ \uf544 — AI robot / agent
+ \uf2db — AI chip / intelligence
+ \uf1b2 — model / module
+ \uf126 — neural branch / network
+ \uf1c0 — model database / knowledge
+ \uf233 — server model
+ \uf0c0 — multi agent
+ \uf2bd — user model / persona
+ \uf007 — user identity
+ \uf085 — agent tools / automation
+ \uf013 — settings / configuration
+ \uf135 — agent mission / launch
+ \uf1d8 — agent action / send
+ \uf0e7 — intelligence / power
+
+CODING:
+ \uf121 — code
+ \uf1c9 — code file
+ \uf15b — file
+ \uf15c — document
+ \uf07b — folder
+ \uf115 — open folder
+ \uf142 — more options
+ \uf1de — controls
+ \uf188 — debug / bug
+ \uf120 — terminal
+ \uf489 — shell / console
+
+FILES / STORAGE:
+ \uf1c6 — zip/archive
+ \uf187 — archive
+ \uf016 — file
+ \uf1c1 — PDF
+ \uf1c2 — Word document
+ \uf1c3 — spreadsheet
+ \uf1c4 — presentation
+ \uf0f6 — text file
+ \uf0cb — list/document
+ \uf1c0 — database
+
+SYSTEM:
+ \uf013 — settings
+ \uf002 — search
+ \uf00c — success
+ \uf00d — error
+ \uf071 — warning
+ \uf017 — time
+ \uf017 — waiting
+ \uf110 — loading
+ \uf08e — open/link
+ \uf019 — download
+ \uf1e0 — share
+ \uf1e6 — connection
+ \uf0ac — internet
+ \uf3fd — speed/performance
+
+SECURITY:
+ \uf023 — locked
+ \uf09c — unlocked
+ \uf502 — security key
+ \uf3ed — protection
+ \uf2bb — identity
+
+AGENT STATES:
+ — completed
+ — processing
+ — waiting
+ — warning
+ — failed
+ — thinking/AI
+ — coding
+ — creating file
+ — packaging
+ — running server
+-------------------------------
+
+Usage rules:
+
+Font Awesome icons are available for terminal UI enhancement.
+
+The agent MAY use these icons when they improve readability, organization, or visual clarity. Icon usage is optional and decided by the agent.
+
+Use icons naturally:
+- Use file icons when showing file lists, project trees, or created files.
+- Use model/AI icons when displaying AI models, agents, or AI-related components.
+- Use tool icons when showing available tools or actions.
+- Use status icons for important states such as success, warning, error, running, or waiting.
+
+Do not force icons into normal conversation.
+Do not add icons to every sentence.
+Do not replace clear text with icons.
+
+If the user asks for the available icons, symbols, or UI icons, provide the icon catalog with the symbol, code, and meaning.

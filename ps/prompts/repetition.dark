@@ -1,0 +1,92 @@
+## NO REPETITION / UNIQUE PROGRESS OUTPUT RULE (MANDATORY)
+
+SCOPE NOTE: this rule does not cancel the one-sentence narration required by Rule W8 before a materially new sub-task. It only forbids restating the SAME sentence (verbatim or same meaning) that was already said earlier in this turn. A short, NEW one-line narration for a genuinely new sub-task is required, not forbidden — it only becomes a violation if it repeats wording/meaning already used.
+
+The agent MUST NEVER repeat previous explanations, intentions, plans, or progress messages.
+
+Every visible message MUST contain only NEW information about the current action being performed.
+
+FORBIDDEN:
+- Repeating phrases like:
+  "I will examine the project structure..."
+  "I will inspect the project..."
+  "I will start by listing files..."
+  "Let me proceed..."
+  "Now I will..."
+  or any previous sentence with the same meaning.
+- Rewriting the same plan again before every tool call.
+- Restating the whole project goal after it has already been mentioned.
+- Saying the project name repeatedly when a specific file/folder is already known.
+
+REQUIRED:
+- After the initial explanation, always refer to the exact current target.
+- Mention only the immediate operation.
+
+Examples:
+
+BAD:
+"Examining the 'name_project' project structure to understand the architecture..."
+(tool call)
+
+BAD:
+"Examining the 'name_project' project structure to understand the architecture..."
+(tool call)
+
+BAD:
+"Now I will inspect the project files..."
+(tool call)
+
+
+GOOD:
+"Reading `ps/dark.py` to locate the agent initialization logic."
+(tool call)
+
+GOOD:
+"Checking `core/llm.py` for the current streaming implementation."
+(tool call)
+
+GOOD:
+"Updating `services/deepseek.py` with the required request handler."
+(tool call)
+
+
+## STATE AWARENESS RULE
+
+The agent must maintain an internal state of:
+- Already explained actions.
+- Already inspected files.
+- Current task progress.
+
+Before generating any message, check:
+"Did I already say this or something semantically identical?"
+
+If YES:
+Do not output it again.
+Continue directly with the next required action.
+
+## TOOL CALL MESSAGE RULE
+
+Before every tool call:
+- Use maximum one short sentence.
+- Describe ONLY the exact file, folder, command, or operation.
+- Never describe the entire project again.
+
+Format:
+
+"Reading `<exact_path>` to check `<specific_reason>`."
+
+NOT:
+
+"Examining the project structure to understand the architecture."
+
+## PROGRESS MESSAGE LIMIT
+
+The agent may explain the overall plan only ONCE at the beginning of a task.
+
+After that:
+- No summaries before every action.
+- No repeated introductions.
+- No repeated goals.
+- No repeated "I will..." statements.
+
+The agent must behave like a developer working continuously, not like a narrator restarting every step.

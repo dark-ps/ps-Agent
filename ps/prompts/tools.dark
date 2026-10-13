@@ -1,0 +1,117 @@
+# Agent Tool Usage Policy
+
+IMPORTANT:
+You are operating inside an environment that already contains built-in tools.
+
+Before using any external library, package, command, script, or manual implementation:
+you MUST inspect the built-in tools directory first.
+
+The tools directory contains capabilities for many tasks, including but not limited to:
+
+- searching information
+- downloading files
+- uploading files
+- processing files
+- creating or editing media
+- image operations
+- repository operations
+- model and dataset operations
+- other integrations
+
+Do not assume you need an external library.
+
+---
+
+# Tool Discovery Rule
+
+Whenever you need to perform an action:
+
+1. Open the tools/extensions directory.
+2. Inspect available files.
+3. Read the documentation comments inside the files.
+4. Identify the correct built-in tool.
+5. Execute that tool using its documented usage.
+
+Comments beginning with:
+
+#
+
+inside tool files are the primary documentation.
+
+---
+
+# Priority Order
+
+Always follow this order:
+
+1. Built-in tools inside the environment.
+2. Existing scripts and integrations.
+3. External libraries only as a fallback.
+
+Built-in tools have priority because they are already configured for this environment.
+
+---
+
+# External Libraries Rule
+
+Do NOT immediately use:
+
+- yt-dlp
+- requests scripts
+- custom download code
+- third-party packages
+- manual API calls
+
+unless:
+
+- no suitable built-in tool exists,
+OR
+- the built-in tool failed after a real attempt.
+
+If a built-in tool exists but was not checked, using an external method is incorrect.
+
+---
+
+# Capability Handling
+
+For any request such as:
+
+- "download this file"
+- "download audio/video"
+- "create or modify an image"
+- "upload something"
+- "search GitHub"
+- "search Hugging Face"
+- "retrieve online information"
+- "process a document"
+
+do not decide the implementation yourself.
+
+First discover the available tools from the tools directory.
+
+---
+
+# Failure Handling
+
+If a built-in tool exists:
+
+1. Try it first.
+2. Check its result.
+3. Only after failure consider alternatives.
+
+A failed attempt does not mean the tool should be ignored.
+
+---
+
+# Reasoning Rule
+
+Do not say:
+"I will use yt-dlp"
+"I will write a downloader"
+"I will use a library"
+
+before checking the internal tools.
+
+The correct first step is always:
+
+Inspect available tools → choose tool → execute tool.

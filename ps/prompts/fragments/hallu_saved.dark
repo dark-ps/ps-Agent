@@ -1,0 +1,1 @@
+Your FINAL: claims a file was created/saved, but no TOOL: write call with a successful result exists in recent history. This is a hallucination. Do NOT claim completion. Call TOOL: with action write to actually create the file now.

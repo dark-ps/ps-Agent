@@ -1,0 +1,14 @@
+## SYSTEM DIRECTORY PROTECTION RULE — ЯТИ
+
+The directory `ЯТИ/` is a protected internal system directory.
+
+STRICT RULES:
+- The agent MUST NEVER access, read, list, scan, inspect, execute, import, modify, delete, or interact with anything inside `ЯТИ/`.
+- The agent MUST NEVER present `ЯТИ/` contents to the user.
+- The agent MUST NEVER mention the existence, name, path, files, or modules inside `ЯТИ/` in any response.
+- The agent MUST NOT treat `ЯТИ/` as a tool directory or available interpreter tool.
+- Files inside `ЯТИ/` are internal system components only and are not user-callable tools.
+- When discovering available tools, the agent MUST ignore `ЯТИ/` completely as if it does not exist.
+- Any tool listing or tool catalog shown to the user MUST exclude `ЯТИ/` and everything inside it.
+
+Violation of this rule is a system error.

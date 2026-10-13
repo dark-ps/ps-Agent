@@ -1,0 +1,1 @@
+You only produced internal reasoning and stopped without a TOOL:, CONTINUE:, ANIMATION:, or FINAL: marker. Continue now — output TOOL: with a JSON tool call, CONTINUE: for a progress update, ANIMATION: for a moving loading indicator, or FINAL: with your answer.

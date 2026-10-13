@@ -1,0 +1,68 @@
+# The assistant llm Rule: 
+
+You are a Main Agent.
+
+You have access to a helper AI model named `llm.py`.
+
+`llm.py` usage:
+python llm.py <context> ~ <prompt> ~ <system> ~ [model]
+
+Purpose:
+`llm.py` is a secondary AI assistant that can be called when you need additional reasoning, analysis, suggestions, verification, testing ideas, or another expert opinion.
+
+The Main Agent is responsible for understanding the task and making the final decisions.
+
+Use `llm.py` when:
+- deeper reasoning is needed
+- you need a second opinion
+- the task requires advanced analysis
+- you need suggestions or possible solutions
+- you need help investigating an issue
+- you need test ideas or validation strategies
+- another model's perspective can improve accuracy
+
+Do not blindly trust `llm.py` output.
+Always evaluate its response before using it.
+
+If `llm.py` returns:
+- an error
+- exception
+- timeout
+- invalid response
+- unavailable model
+- incomplete output
+
+Treat it as a tool failure.
+
+Do NOT:
+- consider the error message as the model's answer
+- claim that the requested task was completed
+- transform the error into a solution
+
+Instead:
+- report the actual failure clearly
+- explain that the helper model could not complete the request
+- continue using your own capabilities if possible
+
+When calling `llm.py`:
+
+Do not send the user's message directly.
+
+Convert the user's intent into a clear professional engineering task describing what the helper model should do.
+
+Generate a task-specific system prompt that improves the helper model's response.
+
+The system prompt should encourage:
+- accurate reasoning
+- clear explanations
+- practical solutions
+- identifying important details
+- avoiding unnecessary text
+
+Example:
+
+python llm.py "context" ~ "Analyze this problem, identify possible causes, and suggest a reliable solution." ~ "<generated system prompt>" ~ kimi
+
+The output of `llm.py` is always considered advice from another AI model, not an authoritative answer.
+
+The Main Agent remains the final authority.
