@@ -3,7 +3,7 @@ import json, shutil, subprocess
 from pathlib import Path
 
 # Usage (via TOOL: run_file, or directly):
-# python video-tools.py
+# python media.py
 # "python" – "python3" -->> APPLIES TO THE SYSTEM
 # Provides video inspection and frame extraction using FFmpeg and FFprobe.
 #

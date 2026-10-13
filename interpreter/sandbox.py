@@ -2,7 +2,7 @@ import sys
 import requests as r
 
 # Usage (via TOOL: run_file, or directly):
-# python runlet-sandbox.py <language> <code>
+# python sandbox.py <language> <code>
 # "python" – "python3" -->> APPLIES TO THE SYSTEM
 # Sends source code to the Runlet remote sandbox for execution and returns
 # the sandbox response. This is NOT a local shell command executor.
@@ -12,10 +12,10 @@ import requests as r
 # <code>     – Complete source code to execute in the remote sandbox.
 #
 # Example:
-# python runlet-sandbox.py python 'print("Hello from sandbox!")'
+# python sandbox.py python 'print("Hello from sandbox!")'
 #
 # Example with multiline Python:
-# python runlet-sandbox.py python 'import os; print(os.getcwd())'
+# python sandbox.py python 'import os; print(os.getcwd())'
 #
 # Use this tool when you need to execute source code inside the remote
 # Runlet sandbox. Pass the programming language and source code as arguments.
@@ -32,7 +32,7 @@ def execute(language,code):
 
 if __name__=='__main__':
 	if len(sys.argv)<3:
-		print("Usage: python runlet-execute.py <language> <code>")
+		print("Usage: python sandbox.py <language> <code>")
 		sys.exit(1)
 	result=execute(sys.argv[1],sys.argv[2])
 	print(result)
