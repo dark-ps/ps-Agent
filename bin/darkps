@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+# ——————————————————————————————————————————————
+#  DarkPs official launcher
+#     darkps                        terminal agent
+#     darkps --ui                   WebUI  (port 7861)
+#     darkps --web-port [PORT]      WebUI  (custom port)
+#     darkps --help | --version
+# ——————————————————————————————————————————————
+set -euo pipefail
+
+BRAND="DarkPs"
+DEFAULT_PORT=7861
+
+# ------------------------------------------------------------ find the install root
+_dps_resolve() {
+    # 1) explicit env override
+    if [[ -n "${DARKPS_ROOT:-}" && -f "${DARKPS_ROOT%/}/main.py" ]]; then
+        printf '%s\n' "${DARKPS_ROOT%/}"; return 0
+    fi
+    # 2) /etc/darkps.conf (written by the .deb package)
+    if [[ -r /etc/darkps.conf ]]; then
+        local r
+        r="$(grep -E '^ROOT=' /etc/darkps.conf 2>/dev/null | head -n1 | cut -d= -f2- || true)"
+        if [[ -n "$r" && -f "${r%/}/main.py" ]]; then printf '%s\n' "${r%/}"; return 0; fi
+    fi
+    # 3) the repo this script lives in (works through symlinks too)
+    local self
+    self="${BASH_SOURCE[0]}"
+    if command -v readlink >/dev/null 2>&1; then
+        self="$(readlink -f "$self" 2>/dev/null || printf '%s' "$self")"
+    fi
+    local here
+    here="$(cd "$(dirname "$self")/.." 2>/dev/null && pwd -P 2>/dev/null || true)"
+    if [[ -n "$here" && -f "$here/main.py" ]]; then printf '%s\n' "$here"; return 0; fi
+    # 4) default installer destination (the one install.sh writes)
+    if [[ -f "$HOME/.local/share/darkps/agent/main.py" ]]; then
+        printf '%s\n' "$HOME/.local/share/darkps/agent"; return 0
+    fi
+    # 5) legacy location (pre-XDG installs)
+    if [[ -f "$HOME/.darkps/agent/main.py" ]]; then
+        printf '%s\n' "$HOME/.darkps/agent"; return 0
+    fi
+    return 1
+}
+
+ROOT="$(_dps_resolve || true)"
+if [[ -z "$ROOT" ]]; then
+    printf '\033[38;2;255;107;107m%s\033[0m\n' \
+        "✘ $BRAND not found — run the installer:  bash install.sh" >&2
+    exit 127
+fi
+
+# ------------------------------------------------------------ pick python
+if   [[ -x "$ROOT/.venv/bin/python3"       ]]; then PY="$ROOT/.venv/bin/python3"
+elif [[ -x "$ROOT/.venv/bin/python"        ]]; then PY="$ROOT/.venv/bin/python"
+elif [[ -x "$ROOT/.venv/Scripts/python.exe" ]]; then PY="$ROOT/.venv/Scripts/python.exe"
+elif [[ -x "$ROOT/.venv/Scripts/python"     ]]; then PY="$ROOT/.venv/Scripts/python"
+elif ! PY="$(command -v python3 || command -v python)"; then
+    printf '\033[38;2;255;107;107m%s\033[0m\n' "✘ python3 not found" >&2
+    exit 127
+fi
+
+# ------------------------------------------------------------ usage
+usage() {
+    printf '\033[38;2;242;242;242m%s\033[0m\n' "  $BRAND — terminal agent + webui"
+    cat <<'USAGE'
+    darkps                  run the terminal agent (REPL)
+    darkps --ui             open the Web UI      → http://127.0.0.1:7861
+    darkps --web-port [N]   open the Web UI on port N (default 7861)
+    darkps --version        print version
+    darkps --help           this help
+USAGE
+}
+
+# ------------------------------------------------------------ dispatch
+port_set=0
+port="$DEFAULT_PORT"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --ui|-u|--web|--webui)
+            port_set=1; shift ;;
+        --web-port|-wp)
+            port_set=1; shift
+            if [[ $# -gt 0 && "$1" =~ ^[0-9]+$ ]]; then port="$1"; shift; fi
+            ;;
+        --port|-p)
+            shift
+            if [[ $# -gt 0 && "$1" =~ ^[0-9]+$ ]]; then port_set=1; port="$1"; shift
+            else printf '\033[38;2;255;107;107m%s\033[0m\n' "✘ --port needs a number" >&2; exit 2; fi
+            ;;
+        --help|-h)
+            usage; exit 0 ;;
+        --version|-V)
+            printf '%s 4.0 · terminal agent + webui\n' "$BRAND"; exit 0 ;;
+        -*)
+            printf '\033[38;2;255;107;107m%s\033[0m\n' "✘ unknown option: $1  (try --help)" >&2
+            exit 2 ;;
+        *)
+            break ;;   # first non-flag arg → pass through to the agent
+    esac
+done
+
+cd "$ROOT"
+
+# the agent package must sit next to main.py
+if [ ! -d "$ROOT/ps" ]; then
+    printf '\033[38;2;255;107;107m%s\033[0m\n' \
+        "✘ agent install damaged — $ROOT/ps is missing; re-run install.sh" >&2
+    exit 126
+fi
+
+if [[ "$port_set" -eq 1 ]]; then
+    PS_UI_PORT="$port" PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}" exec "$PY" -X utf8 "$ROOT/webui/bridge.py"
+else
+    PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}" exec "$PY" -X utf8 "$ROOT/main.py" "$@"
+fi
